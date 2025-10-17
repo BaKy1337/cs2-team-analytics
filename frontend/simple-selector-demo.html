@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Simple - Sélection d'Équipe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">Modal Simple - Sélection d'Équipe</h1>
+        
+        <div class="bg-gray-800 p-6 rounded-lg border border-gray-600">
+            <h2 class="text-xl font-semibold mb-4">Version Simplifiée</h2>
+            
+            <!-- Simulation du modal simple -->
+            <div class="bg-gray-700 p-4 rounded border border-gray-600 max-w-md mx-auto">
+                <h3 class="text-lg font-bold mb-4">Choisir votre équipe</h3>
+                
+                <!-- Recap des 2 équipes -->
+                <div class="space-y-3 mb-6">
+                    <!-- Équipe 1 -->
+                    <div class="p-3 rounded border-2 border-blue-500 bg-blue-500/10 cursor-pointer">
+                        <div class="font-semibold text-white mb-1">NE PRIEHALI</div>
+                        <div class="text-sm text-gray-300">FARIDZ, MelMA, Cugiiii...</div>
+                    </div>
+                    
+                    <!-- Équipe 2 -->
+                    <div class="p-3 rounded border-2 border-gray-600 hover:border-gray-500 cursor-pointer">
+                        <div class="font-semibold text-white mb-1">Evergreen</div>
+                        <div class="text-sm text-gray-300">Joueur1, Joueur2, Joueur3...</div>
+                    </div>
+                </div>
+                
+                <!-- Actions -->
+                <div class="flex gap-3">
+                    <button class="flex-1 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+                        Annuler
+                    </button>
+                    <button class="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        Confirmer
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-6 space-y-4">
+                <div class="bg-green-900/20 border border-green-500/20 p-4 rounded">
+                    <h4 class="font-semibold text-green-400 mb-2">✅ Avantages de la version simple :</h4>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li>• Interface épurée et directe</li>
+                        <li>• Recap rapide des 2 équipes</li>
+                        <li>• Sélection en 1 clic</li>
+                        <li>• Pas de surcharge d'informations</li>
+                        <li>• Chargement instantané</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-blue-900/20 border border-blue-500/20 p-4 rounded">
+                    <h4 class="font-semibold text-blue-400 mb-2">🎯 Fonctionnalités :</h4>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li>• Affichage des noms d'équipe</li>
+                        <li>• Liste des 3 premiers joueurs</li>
+                        <li>• Sélection visuelle avec bordure bleue</li>
+                        <li>• Boutons Annuler/Confirmer</li>
+                        <li>• Animation de hover</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

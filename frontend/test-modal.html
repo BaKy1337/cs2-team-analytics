@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modal TeamSelector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .cs2-dark-0 { background-color: #0a0a0a; }
+        .cs2-dark-100 { background-color: #1a1a1a; }
+        .cs2-dark-200 { background-color: #2a2a2a; }
+        .cs2-gray-400 { color: #9ca3af; }
+        .cs2-gray-600 { color: #4b5563; }
+        .cs2-gray-700 { border-color: #374151; }
+        .cs2-light-100 { color: #f3f4f6; }
+        .cs2-primary { color: #3b82f6; }
+        .cs2-success { color: #10b981; }
+        .cs2-warning { color: #f59e0b; }
+        .cs2-error { color: #ef4444; }
+    </style>
+</head>
+<body class="cs2-dark-0 text-cs2-light-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">Test du Modal TeamSelector</h1>
+        
+        <div class="bg-cs2-dark-200 p-6 rounded-lg border border-cs2-gray-700">
+            <h2 class="text-xl font-semibold mb-4">Données de test</h2>
+            <p class="text-cs2-gray-400 mb-4">
+                Ce fichier simule les données retournées par l'API pour tester l'affichage du modal.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-cs2-dark-100 p-4 rounded border border-cs2-gray-700">
+                    <h3 class="font-semibold text-cs2-primary mb-2">Équipe 1: NE PRIEHALI</h3>
+                    <ul class="text-sm text-cs2-gray-400">
+                        <li>• FARIDZ (Niveau 8)</li>
+                        <li>• MelMA (Niveau 7)</li>
+                        <li>• Cugiiii (Niveau 6)</li>
+                        <li>• Tomassenz (Niveau 8)</li>
+                        <li>• deratisatioN (Niveau 7)</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-cs2-dark-100 p-4 rounded border border-cs2-gray-700">
+                    <h3 class="font-semibold text-cs2-primary mb-2">Équipe 2: Evergreen</h3>
+                    <ul class="text-sm text-cs2-gray-400">
+                        <li>• Joueur 1 (Niveau 6)</li>
+                        <li>• Joueur 2 (Niveau 7)</li>
+                        <li>• Joueur 3 (Niveau 8)</li>
+                        <li>• Joueur 4 (Niveau 6)</li>
+                        <li>• Joueur 5 (Niveau 7)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-cs2-success/10 border border-cs2-success/20 rounded">
+                <h4 class="font-semibold text-cs2-success mb-2">✅ Corrections apportées :</h4>
+                <ul class="text-sm text-cs2-gray-300 space-y-1">
+                    <li>• Noms d'équipe corrigés (plus de "undefined")</li>
+                    <li>• Remplacement de l'alert Windows par un modal moderne</li>
+                    <li>• Interface utilisateur améliorée avec sélection visuelle</li>
+                    <li>• Affichage des informations du match (statut, région, score)</li>
+                    <li>• Avatars et niveaux des joueurs visibles</li>
+                </ul>
+            </div>
+            
+            <div class="mt-4 p-4 bg-cs2-warning/10 border border-cs2-warning/20 rounded">
+                <h4 class="font-semibold text-cs2-warning mb-2">🎯 Fonctionnalités du modal :</h4>
+                <ul class="text-sm text-cs2-gray-300 space-y-1">
+                    <li>• Sélection visuelle des équipes avec hover effects</li>
+                    <li>• Informations détaillées du match</li>
+                    <li>• Fermeture avec Escape ou clic sur backdrop</li>
+                    <li>• Animations fluides avec Framer Motion</li>
+                    <li>• Design responsive et moderne</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
