@@ -8,7 +8,14 @@ require('dotenv').config();
 const app = express();
 const cache = new NodeCache({ stdTTL: 3600 });
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'cs2-team-analytics-git-main-baky1337s-projects.vercel.app', // TON URL Vercel
+    'cs2-team-analytics-px3tx4qdx-baky1337s-projects.vercel.app' // Tous les preview deployments
+  ],
+  credentials: true
+}));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
