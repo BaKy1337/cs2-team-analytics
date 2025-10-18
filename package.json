@@ -1,0 +1,13 @@
+{
+  "name": "cs2-team-analytics",
+  "version": "1.0.0",
+  "description": "CS2 Team Analytics",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install --legacy-peer-deps && npm run build",
+    "install": "cd frontend && npm install --legacy-peer-deps"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
