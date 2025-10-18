@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://cs2-team-analytics.onrender.com/api'
+  ? 'https://cs2-team-analytics-1.onrender.com/api/'
   : 'http://localhost:5000/api';
 
 export const api = {
