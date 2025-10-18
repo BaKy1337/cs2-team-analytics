@@ -8,11 +8,23 @@ require('dotenv').config();
 const app = express();
 const cache = new NodeCache({ stdTTL: 3600 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    cors: 'configured',
+    api_url: 'https://cs2-team-analytics.onrender.com'
+  });
+});
+
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'cs2-team-analytics-git-main-baky1337s-projects.vercel.app', // TON URL Vercel
-    'cs2-team-analytics-px3tx4qdx-baky1337s-projects.vercel.app' // Tous les preview deployments
+    'https://cs2-team-analytics-git-main-baky1337s-projects.vercel.app', // TON URL Vercel
+    'https://cs2-team-analytics-px3tx4qdx-baky1337s-projects.vercel.app', // Tous les preview deployments
+    'https://esea-helper-by-baky.vercel.app', // URL de production
+    'https://*.vercel.app' // Tous les sous-domaines Vercel
   ],
   credentials: true
 }));

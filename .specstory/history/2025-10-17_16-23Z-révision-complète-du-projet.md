@@ -29714,3 +29714,244 @@ Le nouveau favicon **ESEA Helper by Baky** (version mise à jour) est maintenant
 
 ---
 
+_**User (2025-10-17 16:07Z)**_
+
+Bon, j'ai un probleme là, j'ai parfaitement setter le projet sur vercel et render. Le backend fonctionne, le frontend fonctionne les build sont en succes mais lorsque je charge l'équipe : Erreur lors de la récupération du match: Network Error.
+
+Pourtant l'url : @https://cs2-team-analytics.onrender.com/health  renvoi un statut "ok"
+
+---
+
+_**Assistant (default)**_
+
+## **🔧 Diagnostic du problème de Network Error**
+
+Je vois le problème ! Votre backend fonctionne bien sur Render (l'endpoint `/health` répond correctement), mais il y a probablement un problème de configuration CORS ou d'URL dans votre frontend.
+
+Vérifions d'abord la configuration actuelle :
+
+
+---
+
+Tool use: **read_file**
+
+Read file: frontend/src/services/api.js
+
+---
+
+Je vois le problème ! L'URL dans votre frontend pointe vers `https://cs2-analytics-backend.onrender.com/api` mais votre backend fonctionne sur `https://cs2-team-analytics.onrender.com`. 
+
+Corrigeons cela :
+
+
+---
+
+Tool use: **search_replace**
+
+
+<details><summary>Edit file: frontend/src/services/api.js</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -1,5 +1,5 @@
+  import axios from 'axios';
+  
+- const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cs2-analytics-backend.onrender.com/api';
++ const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cs2-team-analytics.onrender.com/api';
+  
+  export const api = {
+```
+
+</details>
+
+---
+
+Maintenant, vérifions la configuration CORS dans votre backend :
+
+
+---
+
+Tool use: **read_file**
+
+Read file: backend/server.js
+
+---
+
+Je vois que la configuration CORS est déjà en place, mais il faut ajouter votre URL Vercel actuelle. Vérifions d'abord quelle est votre URL Vercel actuelle et ajoutons-la :
+
+
+---
+
+Tool use: **search_replace**
+
+
+<details><summary>Edit file: backend/server.js</summary>
+
+**Chunk 1**
+Lines added: 4, lines removed: 2
+
+```diff
+@@ -12,6 +12,8 @@
+    origin: [
+      'http://localhost:5173',
+-     'cs2-team-analytics-git-main-baky1337s-projects.vercel.app', // TON URL Vercel
+-     'cs2-team-analytics-px3tx4qdx-baky1337s-projects.vercel.app' // Tous les preview deployments
++     'https://cs2-team-analytics-git-main-baky1337s-projects.vercel.app', // TON URL Vercel
++     'https://cs2-team-analytics-px3tx4qdx-baky1337s-projects.vercel.app', // Tous les preview deployments
++     'https://esea-helper-by-baky.vercel.app', // URL de production
++     'https://*.vercel.app' // Tous les sous-domaines Vercel
+    ],
+    credentials: true
+```
+
+</details>
+
+---
+
+Maintenant, ajoutons un endpoint de test pour vérifier la connectivité :
+
+
+---
+
+Tool use: **search_replace**
+
+
+<details><summary>Edit file: backend/server.js</summary>
+
+**Chunk 1**
+Lines added: 10, lines removed: undefined
+
+```diff
+@@ -8,4 +8,14 @@
+  const app = express();
+  const cache = new NodeCache({ stdTTL: 3600 });
++ 
++ // Health check endpoint
++ app.get('/health', (req, res) => {
++   res.json({ 
++     status: 'ok', 
++     timestamp: new Date().toISOString(),
++     cors: 'configured',
++     api_url: 'https://cs2-team-analytics.onrender.com'
++   });
++ });
+  
+  app.use(cors({
+```
+
+</details>
+
+---
+
+Maintenant, créons un fichier de configuration d'environnement pour Vercel :
+
+
+---
+
+Cannot edit files blocked by globalIgnore
+
+---
+
+Cannot edit files blocked by globalIgnore
+
+---
+
+Créons plutôt un fichier de configuration Vercel :
+
+
+---
+
+Tool use: **write**
+
+
+<details><summary>Edit file: vercel.json</summary>
+
+**Chunk 1**
+Lines added: 10, lines removed: 1
+
+```diff
+@@ -1,1 +1,10 @@
+- 
++ {
++   "env": {
++     "VITE_API_URL": "https://cs2-team-analytics.onrender.com/api"
++   },
++   "build": {
++     "env": {
++       "VITE_API_URL": "https://cs2-team-analytics.onrender.com/api"
++     }
++   }
++ }
+```
+
+</details>
+
+---
+
+Maintenant, ajoutons une meilleure gestion d'erreur dans le frontend :
+
+
+---
+
+Tool use: **search_replace**
+
+
+<details><summary>Edit file: frontend/src/services/api.js</summary>
+
+**Chunk 1**
+Lines added: 27, lines removed: undefined
+
+```diff
+@@ -2,4 +2,31 @@
+  
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cs2-team-analytics.onrender.com/api';
++ 
++ // Configuration axios avec timeout et gestion d'erreur
++ const apiClient = axios.create({
++   baseURL: API_BASE_URL,
++   timeout: 30000, // 30 secondes
++   headers: {
++     'Content-Type': 'application/json',
++   }
++ });
++ 
++ // Intercepteur pour les erreurs
++ apiClient.interceptors.response.use(
++   (response) => response,
++   (error) => {
++     console.error('API Error:', error);
++     if (error.code === 'ECONNABORTED') {
++       throw new Error('Timeout: Le serveur met trop de temps à répondre');
++     }
++     if (error.response) {
++       throw new Error(`Erreur serveur: ${error.response.status} - ${error.response.data?.error || error.response.statusText}`);
++     }
++     if (error.request) {
++       throw new Error('Erreur réseau: Impossible de contacter le serveur');
++     }
++     throw new Error('Erreur inconnue');
++   }
++ );
+  
+  export const api = {
+```
+
+</details>
+
+---
+
+Maintenant, mettons à jour toutes les fonctions API pour utiliser le client configuré :
+
+
+---
+
+Tool use: **search_replace**
+
+---
+
+
+
+---
+
