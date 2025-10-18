@@ -209,12 +209,12 @@ export default function TeamInput({ onAnalyze, loading, isOurTeam = true, onLoad
                 className="input flex-1"
                 value={matchId}
                 onChange={(e) => setMatchId(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && (isOurTeam ? loadBothTeamsFromMatch() : loadOpponentTeam())}
+                onKeyPress={(e) => e.key === 'Enter' && (isOurTeam ? loadBothTeamsFromMatch('optimized') : loadOpponentTeam())}
               />
               <div className="flex gap-2">
                 {isOurTeam && onLoadBothTeams ? (
                   <button
-                    onClick={loadBothTeamsFromMatch}
+                    onClick={() => loadBothTeamsFromMatch('optimized')}
                     disabled={loadingMatch || !matchId.trim()}
                     className="btn btn-primary"
                   >

@@ -8,7 +8,13 @@
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["esports", "cs2", "faceit", "team-analysis", "esea"],
+  "keywords": [
+    "esports",
+    "cs2",
+    "faceit",
+    "team-analysis",
+    "esea"
+  ],
   "author": "Baky",
   "license": "ISC",
   "type": "commonjs",

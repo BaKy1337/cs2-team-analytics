@@ -8,7 +8,17 @@ require('dotenv').config();
 const app = express();
 const cache = new NodeCache({ stdTTL: 3600 });
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://cs2-team-analytics.vercel.app',
+    'https://cs2-team-analytics-git-main-baky1337.vercel.app'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
@@ -2158,6 +2168,51 @@ app.get('/api/match/:matchId/teams', async (req, res) => {
     
     console.log(`🔄 Chargement du match ${matchId} en mode ${mode}`);
     const startTime = Date.now();
+    
+    // Vérifier si la clé API est configurée
+    if (!FACEIT_API_KEY || FACEIT_API_KEY === 'your_faceit_api_key_here') {
+      console.log('⚠️ Clé API Faceit non configurée, utilisation du mode test');
+      return res.json({
+        match_id: matchId,
+        teams: {
+          faction1: {
+            team_id: 'test_team_1',
+            name: 'Équipe Test 1',
+            avatar: '',
+            roster: [
+              { player_id: 'test1', nickname: 'TestPlayer1', avatar: '', skill_level: 8 },
+              { player_id: 'test2', nickname: 'TestPlayer2', avatar: '', skill_level: 7 },
+              { player_id: 'test3', nickname: 'TestPlayer3', avatar: '', skill_level: 9 },
+              { player_id: 'test4', nickname: 'TestPlayer4', avatar: '', skill_level: 6 },
+              { player_id: 'test5', nickname: 'TestPlayer5', avatar: '', skill_level: 8 }
+            ]
+          },
+          faction2: {
+            team_id: 'test_team_2',
+            name: 'Équipe Test 2',
+            avatar: '',
+            roster: [
+              { player_id: 'test6', nickname: 'TestPlayer6', avatar: '', skill_level: 7 },
+              { player_id: 'test7', nickname: 'TestPlayer7', avatar: '', skill_level: 8 },
+              { player_id: 'test8', nickname: 'TestPlayer8', avatar: '', skill_level: 6 },
+              { player_id: 'test9', nickname: 'TestPlayer9', avatar: '', skill_level: 9 },
+              { player_id: 'test10', nickname: 'TestPlayer10', avatar: '', skill_level: 7 }
+            ]
+          }
+        },
+        match_info: {
+          game_id: 'cs2',
+          region: 'EU',
+          status: 'finished',
+          started_at: Date.now() / 1000 - 3600,
+          finished_at: Date.now() / 1000 - 1800,
+          results: { winner: 'faction1', score: { faction1: 16, faction2: 14 } }
+        },
+        optimization: 'test_mode',
+        loading_time: Date.now() - startTime,
+        note: 'Mode test - Configurez FACEIT_API_KEY pour utiliser l\'API réelle'
+      });
+    }
     
     // Récupérer les détails du match
     const matchResponse = await axios.get(`${FACEIT_BASE_URL}/matches/${matchId}`, { 
